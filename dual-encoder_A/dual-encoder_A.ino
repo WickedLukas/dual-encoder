@@ -14,8 +14,8 @@
 
 #define SLAVE_ADDRESS 0x08
 
-// volatile boolean M1_interrupt = false;
-// volatile boolean M2_interrupt = false;
+//volatile boolean M1_interrupt = false;
+//volatile boolean M2_interrupt = false;
 
 volatile int8_t enc_count_M1 = 0;
 volatile int8_t enc_count_M2 = 0;
