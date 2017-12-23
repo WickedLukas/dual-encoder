@@ -72,7 +72,7 @@ void setup() {
 	while (!Serial); // wait for Leonardo eNUMeration, others continue immediately
 
 	attachInterrupt(digitalPinToInterrupt(2), encoder_isr_M1, CHANGE);
-	attachInterrupt(digitalPinToInterrupt(3), encoder_isr_M2, CHANGE);´
+	attachInterrupt(digitalPinToInterrupt(3), encoder_isr_M2, CHANGE);
 
 	digitalWrite(digitalPinToInterrupt(2), HIGH);
 	digitalWrite(digitalPinToInterrupt(3), HIGH);
