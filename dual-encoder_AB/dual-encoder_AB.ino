@@ -23,6 +23,20 @@ volatile int8_t enc_count_M2 = 0;
 // stores which combination of current and previous encoder state lead to an increase or decrease of the encoder count and which are not defined
 const int8_t lookup_table[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
 
+// NOTE! Enabling DEBUG adds about 3.3kB to the flash program size.
+// Debug output is now working even on ATMega328P MCUs (e.g. Arduino Uno)
+// after moving string constants to flash memory storage using the F()
+// compiler macro (Arduino IDE 1.0+ required).
+//#define DEBUG
+
+#ifdef DEBUG
+#define DEBUG_PRINT(x) Serial.print(x)
+#define DEBUG_PRINTLN(x) Serial.println(x)
+#else
+#define DEBUG_PRINT(x)
+#define DEBUG_PRINTLN(x)
+#endif
+
 void requestEvent() {
 	Wire.write(enc_count_M1);
 	Wire.write(enc_count_M2);
@@ -66,10 +80,12 @@ void setup() {
 	Wire.begin(SLAVE_ADDRESS);
 	// register event
 	Wire.onRequest(requestEvent);
-	
+
+  #ifdef DEBUG
 	// initialize serial communication
 	Serial.begin(115200);
 	while (!Serial); // wait for Leonardo eNUMeration, others continue immediately
+  #endif
 
 	attachInterrupt(digitalPinToInterrupt(0),encoder_isr_M1,CHANGE);
 	attachInterrupt(digitalPinToInterrupt(1),encoder_isr_M1,CHANGE);
@@ -84,12 +100,12 @@ void setup() {
 
 void loop() {
 	/*if (M1_interrupt) {
-		Serial.println(enc_count_M1 % 1000);
+		DEBUG_PRINTLN(enc_count_M1 % 1000);
 		M1_interrupt = false;
 	}
 	
 	if (M2_interrupt) {
-		Serial.print("\t"); Serial.println(enc_count_M2 % 1000);
+		DEBUG_PRINT("\t"); DEBUG_PRINTLN(enc_count_M2 % 1000);
 		M2_interrupt = false;
 	}*/
 }
