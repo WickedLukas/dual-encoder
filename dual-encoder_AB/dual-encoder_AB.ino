@@ -17,8 +17,10 @@
 //volatile boolean M1_interrupt = false;
 //volatile boolean M2_interrupt = false;
 
-volatile int8_t enc_count_M1 = 0;
-volatile int8_t enc_count_M2 = 0;
+volatile int16_t enc_count_M1 = 0;
+volatile int16_t enc_count_M2 = 0;
+
+byte message[4];
 
 // stores which combination of current and previous encoder state lead to an increase or decrease of the encoder count and which are not defined
 const int8_t lookup_table[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
@@ -38,11 +40,15 @@ const int8_t lookup_table[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 
 #endif
 
 void requestEvent() {
-	Wire.write(enc_count_M1);
-	Wire.write(enc_count_M2);
-	
+	message[0] = (enc_count_M1 >> 8) & 0xFF;
+	message[1] = enc_count_M1 & 0xFF;
+	message[2] = (enc_count_M2 >> 8) & 0xFF;
+	message[3] = enc_count_M2 & 0xFF;
+
 	enc_count_M1 = 0;
 	enc_count_M2 = 0;
+	
+	Wire.write(message, 4);
 }
 
 void encoder_isr_M1() {
@@ -51,7 +57,7 @@ void encoder_isr_M1() {
 	
 	// shift the previous encoder state to the left
 	enc_state = enc_state << 2;
-	// add the current encoder state (PIND stores the values of digital pins 0-7) 
+	// add the current encoder state (PIND stores the values of digital pins 0-7)
 	enc_state = enc_state | (PIND & 0b0011);
 	
 	// change encounter count according to encoder state
@@ -81,11 +87,11 @@ void setup() {
 	// register event
 	Wire.onRequest(requestEvent);
 
-  #ifdef DEBUG
+	#ifdef DEBUG
 	// initialize serial communication
 	Serial.begin(115200);
 	while (!Serial); // wait for Leonardo eNUMeration, others continue immediately
-  #endif
+	#endif
 
 	attachInterrupt(digitalPinToInterrupt(0),encoder_isr_M1,CHANGE);
 	attachInterrupt(digitalPinToInterrupt(1),encoder_isr_M1,CHANGE);
@@ -100,12 +106,12 @@ void setup() {
 
 void loop() {
 	/*if (M1_interrupt) {
-		DEBUG_PRINTLN(enc_count_M1 % 1000);
-		M1_interrupt = false;
+	DEBUG_PRINTLN(enc_count_M1 % 1000);
+	M1_interrupt = false;
 	}
 	
 	if (M2_interrupt) {
-		DEBUG_PRINT("\t"); DEBUG_PRINTLN(enc_count_M2 % 1000);
-		M2_interrupt = false;
+	DEBUG_PRINT("\t"); DEBUG_PRINTLN(enc_count_M2 % 1000);
+	M2_interrupt = false;
 	}*/
 }
