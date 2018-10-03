@@ -40,10 +40,19 @@ const int8_t lookup_table[] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 
 #endif
 
 void requestEvent() {
+	static uint8_t SREG_bak;
+	
+	SREG_bak = SREG;	//save global interrupt state
+	noInterrupts();
 	message[0] = (enc_count_M1 >> 8) & 0xFF;
 	message[1] = enc_count_M1 & 0xFF;
+	SREG = SREG_bak; 	//restore interrupt state
+	
+	SREG_bak = SREG;	//save global interrupt state
+	noInterrupts();	
 	message[2] = (enc_count_M2 >> 8) & 0xFF;
 	message[3] = enc_count_M2 & 0xFF;
+	SREG = SREG_bak; 	//restore interrupt state
 
 	enc_count_M1 = 0;
 	enc_count_M2 = 0;
