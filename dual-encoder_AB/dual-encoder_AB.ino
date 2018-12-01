@@ -101,16 +101,21 @@ void setup() {
 	Serial.begin(115200);
 	while (!Serial); // wait for Leonardo eNUMeration, others continue immediately
 	#endif
-
+	
+	pinMode(0, INPUT);
+	pinMode(1, INPUT);
+	pinMode(2, INPUT);
+	pinMode(3, INPUT);
+	
+	digitalWrite(0, HIGH);
+	digitalWrite(1, HIGH);
+	digitalWrite(2, HIGH);
+	digitalWrite(3, HIGH);
+	
 	attachInterrupt(digitalPinToInterrupt(0),encoder_isr_M1,CHANGE);
 	attachInterrupt(digitalPinToInterrupt(1),encoder_isr_M1,CHANGE);
 	attachInterrupt(digitalPinToInterrupt(2),encoder_isr_M2,CHANGE);
 	attachInterrupt(digitalPinToInterrupt(3),encoder_isr_M2,CHANGE);
-
-	digitalWrite(digitalPinToInterrupt(0), HIGH);
-	digitalWrite(digitalPinToInterrupt(1), HIGH);
-	digitalWrite(digitalPinToInterrupt(2), HIGH);
-	digitalWrite(digitalPinToInterrupt(3), HIGH);
 }
 
 void loop() {
