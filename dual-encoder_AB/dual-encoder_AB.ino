@@ -49,7 +49,7 @@ void requestEvent() {
 	SREG = SREG_bak; 	//restore interrupt state
 	
 	SREG_bak = SREG;	//save global interrupt state
-	noInterrupts();	
+	noInterrupts();
 	message[2] = (enc_count_M2 >> 8) & 0xFF;
 	message[3] = enc_count_M2 & 0xFF;
 	SREG = SREG_bak; 	//restore interrupt state
