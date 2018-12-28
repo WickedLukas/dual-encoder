@@ -107,10 +107,10 @@ void setup() {
 	pinMode(2, INPUT);
 	pinMode(3, INPUT);
 	
-	attachInterrupt(digitalPinToInterrupt(0),encoder_isr_M1,CHANGE);
-	attachInterrupt(digitalPinToInterrupt(1),encoder_isr_M1,CHANGE);
-	attachInterrupt(digitalPinToInterrupt(2),encoder_isr_M2,CHANGE);
-	attachInterrupt(digitalPinToInterrupt(3),encoder_isr_M2,CHANGE);
+	attachInterrupt(digitalPinToInterrupt(0), encoder_isr_M1, CHANGE);
+	attachInterrupt(digitalPinToInterrupt(1), encoder_isr_M1, CHANGE);
+	attachInterrupt(digitalPinToInterrupt(2), encoder_isr_M2, CHANGE);
+	attachInterrupt(digitalPinToInterrupt(3), encoder_isr_M2, CHANGE);
 }
 
 void loop() {
