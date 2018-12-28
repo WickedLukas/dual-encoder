@@ -105,18 +105,18 @@ void setup() {
 	pinMode(2, INPUT);
 	pinMode(3, INPUT);
 	
-	attachInterrupt(digitalPinToInterrupt(2),encoder_isr_M2,CHANGE);
-	attachInterrupt(digitalPinToInterrupt(3),encoder_isr_M2,CHANGE);
+	attachInterrupt(digitalPinToInterrupt(2), encoder_isr_M1, CHANGE);
+	attachInterrupt(digitalPinToInterrupt(3), encoder_isr_M2, CHANGE);
 }
 
 void loop() {
 	/*if (M1_interrupt) {
-	DEBUG_PRINTLN(enc_count_M1 % 1000);
-	M1_interrupt = false;
+		DEBUG_PRINTLN(enc_count_M1 % 1000);
+		M1_interrupt = false;
 	}
 	
 	if (M2_interrupt) {
-	DEBUG_PRINT("\t"); DEBUG_PRINTLN(enc_count_M2 % 1000);
-	M2_interrupt = false;
+		DEBUG_PRINT("\t"); DEBUG_PRINTLN(enc_count_M2 % 1000);
+		M2_interrupt = false;
 	}*/
 }

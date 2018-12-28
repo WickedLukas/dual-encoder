@@ -115,12 +115,12 @@ void setup() {
 
 void loop() {
 	/*if (M1_interrupt) {
-	DEBUG_PRINTLN(enc_count_M1 % 1000);
-	M1_interrupt = false;
+		DEBUG_PRINTLN(enc_count_M1 % 1000);
+		M1_interrupt = false;
 	}
 	
 	if (M2_interrupt) {
-	DEBUG_PRINT("\t"); DEBUG_PRINTLN(enc_count_M2 % 1000);
-	M2_interrupt = false;
+		DEBUG_PRINT("\t"); DEBUG_PRINTLN(enc_count_M2 % 1000);
+		M2_interrupt = false;
 	}*/
 }
